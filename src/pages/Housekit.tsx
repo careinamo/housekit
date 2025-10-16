@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useUser } from '@clerk/clerk-react';
 import UserInfoCard from '../components/Housekit/UserInfoCard';
 import DeviceCard from '../components/Housekit/DeviceCard';
 import { UserInfo, Device } from '../types/housekit';
 import { housekitService } from '../services/housekitService';
 import PageMeta from '../components/common/PageMeta';
 import PageBreadcrumb from '../components/common/PageBreadCrumb';
+import ProtectedRoute from '../components/auth/ProtectedRoute';
 
 const Housekit: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -111,10 +113,11 @@ const Housekit: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <PageMeta title={`${t('housekit.title')} - ${t('housekit.subtitle')}`} description={t('housekit.subtitle')}/>
-      
-      <div className="container mx-auto px-4 py-6">
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <PageMeta title={`${t('housekit.title')} - ${t('housekit.subtitle')}`} description={t('housekit.subtitle')}/>
+        
+        <div className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center mb-6">
           <PageBreadcrumb 
             pageTitle={t('housekit.title')} 
@@ -176,6 +179,7 @@ const Housekit: React.FC = () => {
         </div>
       </div>
     </div>
+    </ProtectedRoute>
   );
 };
 

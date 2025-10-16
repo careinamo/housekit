@@ -20,6 +20,7 @@ import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import MyDashboard from "./pages/MyDashboard";
 import Housekit from './pages/Housekit';
+import Welcome from './pages/Welcome';
 
 export default function App() {
   return (
@@ -27,9 +28,12 @@ export default function App() {
       <Router>
         <ScrollToTop />
         <Routes>
+          {/* Public Welcome Page */}
+          <Route path="/" element={<Welcome />} />
+          
           {/* Dashboard Layout */}
           <Route element={<AppLayout />}>
-            <Route index path="/" element={<Home />} />
+            <Route path="/Home" element={<Home />} />
             <Route path="/housekit" element={<Housekit />} />
             <Route path="/my-dashboard" element={<MyDashboard />} />
 
