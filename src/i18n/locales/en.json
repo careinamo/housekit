@@ -1,0 +1,38 @@
+{
+  "housekit": {
+    "title": "Housekit",
+    "subtitle": "Laundry Management",
+    "welcome": "Welcome {{name}}",
+    "quotas_available": "{{count}} available quotas. your quotas accumulate on the {{dateCut}} of each month",
+    "loading": "Loading...",
+    "error": "Error: {{message}}",
+    "retry": "Retry",
+    "no_devices": "No devices available at the moment.",
+    "language": "Language",
+    "spanish": "Español",
+    "english": "English"
+  },
+  "user_info": {
+    "washing_machines": "Washing Machines",
+    "dryers": "Dryers",
+    "quotas": "quotas",
+    "penalties_l": "Penalties L",
+    "penalties_s": "Penalties S"
+  },
+  "device": {
+    "available": "Available",
+    "occupied_by": "Occupied by {{name}}",
+    "service_starts": "Service starts after confirmation",
+    "time_remaining": "Time remaining",
+    "minutes": "{{count}} minutes",
+    "quotas_available": "{{count}} quotas available",
+    "penalties": "{{count}} penalties",
+    "history": "history",
+    "request": "request",
+    "confirm": "confirm",
+    "cancel_service": "Cancel Service",
+    "requesting": "Requesting device {{id}}",
+    "confirming": "Confirming use of device {{id}}",
+    "canceling": "Canceling service for device {{id}}"
+  }
+}

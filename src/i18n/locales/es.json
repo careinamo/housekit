@@ -1,0 +1,38 @@
+{
+  "housekit": {
+    "title": "Housekit",
+    "subtitle": "Gestión de Lavandería",
+    "welcome": "Bienvenido {{name}}",
+    "quotas_available": "{{count}} cupos disponibles. tus cupos se acumulan los {{dateCut}} de cada mes",
+    "loading": "Cargando...",
+    "error": "Error: {{message}}",
+    "retry": "Reintentar",
+    "no_devices": "No hay dispositivos disponibles en este momento.",
+    "language": "Idioma",
+    "spanish": "Español",
+    "english": "English"
+  },
+  "user_info": {
+    "washing_machines": "Lavadoras",
+    "dryers": "Secadoras", 
+    "quotas": "cupos",
+    "penalties_l": "Penalizaciones L",
+    "penalties_s": "Penalizaciones S"
+  },
+  "device": {
+    "available": "Disponible",
+    "occupied_by": "Ocupado por {{name}}",
+    "service_starts": "Servicio inicia de luego de confirmar",
+    "time_remaining": "Tiempo faltante",
+    "minutes": "{{count}} minutos",
+    "quotas_available": "{{count}} cupos disponibles",
+    "penalties": "{{count}} penalizaciones",
+    "history": "historial",
+    "request": "solicitar",
+    "confirm": "confirmar",
+    "cancel_service": "Cancelar Servicio",
+    "requesting": "Solicitando dispositivo {{id}}",
+    "confirming": "Confirmando uso del dispositivo {{id}}",
+    "canceling": "Cancelando servicio del dispositivo {{id}}"
+  }
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Device, DeviceStatus } from '../../types/housekit';
 
 interface DeviceCardProps {
@@ -12,6 +13,8 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
   currentUserDocument, 
   onAction 
 }) => {
+  const { t } = useTranslation();
+  
   const getDeviceStatus = (): DeviceStatus => {
     if (device.available) return 'available';
     if (device.userUsing?.document === currentUserDocument) return 'my_service';
@@ -20,7 +23,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
 
   const getCardClasses = () => {
     const status = getDeviceStatus();
-    const baseClasses = "rounded-lg border-2 border-dashed p-4 transition-all duration-200";
+    const baseClasses = "rounded-lg border-1 p-4 transition-all duration-200";
     
     switch (status) {
       case 'available':
@@ -47,7 +50,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
           onClick={() => onAction(device.id, 'request')}
           className="w-full mt-3 px-4 py-2 bg-green-100 text-green-700 border border-green-300 border-dashed rounded-md hover:bg-green-150 transition-colors text-sm font-medium"
         >
-          solicitar
+          {t('device.request')}
         </button>
       );
     }
@@ -59,13 +62,13 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
             onClick={() => onAction(device.id, 'confirm')}
             className="w-full px-4 py-2 bg-green-100 text-green-700 border border-green-300 border-dashed rounded-md hover:bg-green-150 transition-colors text-sm font-medium"
           >
-            confirmar
+            {t('device.confirm')}
           </button>
           <button
             onClick={() => onAction(device.id, 'cancel')}
             className="w-full px-4 py-2 bg-red-100 text-red-700 border border-red-300 border-dashed rounded-md hover:bg-red-150 transition-colors text-sm font-medium"
           >
-            Cancelar Servicio
+            {t('device.cancel_service')}
           </button>
         </div>
       );
@@ -91,33 +94,33 @@ const DeviceCard: React.FC<DeviceCardProps> = ({
             status === 'available' ? 'text-green-600' : 
             status === 'my_service' ? 'text-green-700' : 'text-gray-500'
           }`}>
-            {status === 'available' ? 'Disponible' : 
-             status === 'my_service' ? 'Servicio inicia de luego de confirmar' : 
-             `Ocupado por ${device.userUsing.name}`}
+            {status === 'available' ? t('device.available') : 
+             status === 'my_service' ? t('device.service_starts') : 
+             t('device.occupied_by', { name: device.userUsing.name })}
           </p>
         </div>
       </div>
 
       {status === 'occupied' && device.userUsing?.name && (
         <div className="mb-3 text-sm text-gray-600">
-          <p><strong>Tiempo faltante:</strong> 47 minutos</p>
+          <p><strong>{t('device.time_remaining')}:</strong> {t('device.minutes', { count: 47 })}</p>
         </div>
       )}
 
       {status === 'my_service' && (
         <div className="mb-3 text-sm text-green-700">
-          <p><strong>Tiempo faltante:</strong> 49 minutos</p>
+          <p><strong>{t('device.time_remaining')}:</strong> {t('device.minutes', { count: 49 })}</p>
         </div>
       )}
 
       <div className="text-sm text-gray-600 space-y-1">
-        <p><strong>{quotes}</strong> cupos disponibles</p>
-        <p><strong>1</strong> penalizaciones</p>
+        <p>{t('device.quotas_available', { count: quotes })}</p>
+        <p>{t('device.penalties', { count: 1 })}</p>
       </div>
 
       <div className="mt-3 text-xs text-gray-500">
         <span className="underline cursor-pointer hover:text-gray-700">
-          historial
+          {t('device.history')}
         </span>
       </div>
 
