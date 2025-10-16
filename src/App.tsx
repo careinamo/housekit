@@ -16,6 +16,7 @@ import BasicTables from "./pages/Tables/BasicTables";
 import FormElements from "./pages/Forms/FormElements";
 import Blank from "./pages/Blank";
 import AppLayout from "./layout/AppLayout";
+import ProtectedLayout from "./layout/ProtectedLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import MyDashboard from "./pages/MyDashboard";
@@ -31,8 +32,9 @@ export default function App() {
           {/* Public Welcome Page */}
           <Route path="/" element={<Welcome />} />
           
-          {/* Dashboard Layout */}
-          <Route element={<AppLayout />}>
+          {/* Protected Dashboard Layout - All routes inside require authentication */}
+          <Route element={<ProtectedLayout />}>
+            {/* <Route path="/" element={<Home />} /> */}
             <Route path="/Home" element={<Home />} />
             <Route path="/housekit" element={<Housekit />} />
             <Route path="/my-dashboard" element={<MyDashboard />} />
@@ -61,7 +63,7 @@ export default function App() {
             <Route path="/bar-chart" element={<BarChart />} />
           </Route>
 
-          {/* Auth Layout */}
+          {/* Public Auth Pages */}
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
 

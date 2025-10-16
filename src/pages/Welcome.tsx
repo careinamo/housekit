@@ -10,7 +10,6 @@ export default function Welcome() {
 
       <div className="container mx-auto px-4 py-16">
         <AuthHeader />
-        <UserDropdown />
         <div className="max-w-4xl mx-auto text-center">
           {/* Header */}
           <div className="mb-12">
