@@ -10,13 +10,14 @@ import PageBreadcrumb from '../components/common/PageBreadCrumb';
 
 const Housekit: React.FC = () => {
   const { t, i18n } = useTranslation();
+  const { user, isLoaded } = useUser();
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
-  // Documento del usuario actual - en una app real vendría del contexto/auth
-  const currentUserDocument = "ppt5492933";
+  // Obtener el username del usuario autenticado en Clerk
+  const currentUserDocument = user?.username || user?.id || "";
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -25,10 +26,17 @@ const Housekit: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      // No cargar datos hasta que Clerk haya cargado el usuario
+      if (!isLoaded || !currentUserDocument) {
+        return;
+      }
+
       try {
         setLoading(true);
         setError(null);
 
+        console.log('Fetching data for user:', currentUserDocument);
+        
         const [userInfoResponse, devicesResponse] = await Promise.all([
           housekitService.getUserInfo(currentUserDocument),
           housekitService.getDevices(currentUserDocument)
@@ -48,7 +56,7 @@ const Housekit: React.FC = () => {
     };
 
     fetchData();
-  }, [currentUserDocument]);
+  }, [currentUserDocument, isLoaded]);
 
   const handleDeviceAction = async (deviceId: string, action: 'request' | 'confirm' | 'cancel') => {
     console.log(`Action ${action} on device ${deviceId}`);
@@ -80,13 +88,46 @@ const Housekit: React.FC = () => {
     }
   };
 
-  if (loading) {
+  // Mostrar carga mientras Clerk no haya cargado el usuario o mientras se cargan los datos
+  if (!isLoaded || loading) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <PageMeta title={`${t('housekit.title')} - ${t('housekit.subtitle')}`} description={t('housekit.subtitle')} />
         <div className="flex items-center justify-center min-h-96">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
-          <span className="ml-3 text-gray-600 dark:text-gray-400">{t('housekit.loading')}</span>
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+            <span className="text-gray-600 dark:text-gray-400">
+              {!isLoaded ? 'Cargando usuario...' : t('housekit.loading')}
+            </span>
+            {isLoaded && user && (
+              <div className="mt-2 text-sm text-gray-500">
+                Usuario: {user.username || user.firstName || 'Sin nombre'}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Validar que tenemos un usuario válido
+  if (!currentUserDocument) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <PageMeta title={`${t('housekit.title')} - Error`} description="Usuario no válido"/>
+        <div className="container mx-auto px-4 py-8">
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
+            <p className="text-yellow-600">No se pudo obtener la información del usuario.</p>
+            <p className="text-sm text-yellow-500 mt-2">
+              Asegúrate de tener un username configurado en tu perfil de Clerk.
+            </p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="mt-4 px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700"
+            >
+              Reintentar
+            </button>
+          </div>
         </div>
       </div>
     );
