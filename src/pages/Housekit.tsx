@@ -37,15 +37,11 @@ const Housekit: React.FC = () => {
 
         console.log('Fetching data for user:', currentUserDocument);
         
-        const [userInfoResponse, devicesResponse] = await Promise.all([
-          housekitService.getUserInfo(currentUserDocument),
-          housekitService.getDevices(currentUserDocument)
-        ]);
+        // Ahora getDevices devuelve tanto el usuario como los dispositivos
+        const { user, devices: devicesResponse } = await housekitService.getDevices(currentUserDocument);
 
-        if (userInfoResponse.length > 0) {
-          setUserInfo(userInfoResponse[0]);
-        }
-        
+        // Establecer la información del usuario desde la respuesta de AWS
+        setUserInfo(user);
         setDevices(devicesResponse);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error desconocido');
